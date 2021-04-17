@@ -124,13 +124,6 @@ const Patient = () => {
         setImage(e.target.files[0]);
         }
     }
-
-    const handleDbPictures = (id,key) => {
-        fireDb.database().ref(`patients/${id}`).child(`${key}`).push({
-            Name:key,
-            Link:ImgUrl
-        })
-    }
             
     const handleUpload = key => {
         if (!Date.now) {
@@ -151,7 +144,10 @@ const Patient = () => {
                 uploadTask.snapshot.ref.getDownloadURL().then(function(url){
                     ImgUrl=url;
                     
-                    handleDbPictures()
+                    fireDb.database().ref(`patients/`).child(`${key}`).push({
+                        Name:key,
+                        Link:ImgUrl
+                    })
                     
                 });
             }
